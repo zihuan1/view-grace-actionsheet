@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.zihuan.view.actionsheet.BottomSheetAdapter.MyHolder
+import com.zihuan.view.actionsheet.DefViewAdapter.MyHolder
 
 /**
  * @author zihuan
  */
-class BottomSheetAdapter(any: Any) : Adapter<MyHolder>() {
+class DefViewAdapter(any: Any) : Adapter<MyHolder>() {
     private val listModel = ArrayList<String>()
     //    自动实现点击
       var mListener: ActionSheetListener? =

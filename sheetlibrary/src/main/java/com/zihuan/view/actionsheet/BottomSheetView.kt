@@ -1,77 +1,55 @@
 package com.zihuan.view.actionsheet
 
+import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlin.collections.ArrayList
 
-class BottomSheetView private constructor(context: Context) : BaseActionSheet(context) {
-
-    private var tvDismiss: TextView
-    private var mBottomAdapter: BottomSheetAdapter
-    private var mDismissListener: ActionSheetDismissListener? = null
-
-    /**
-     * 取消文字
-     */
-    var dismissText: String? = null
-        set(value) {
-            tvDismiss.text = value
-        }
-    /***
-     * 字体颜色
-     */
-    var dismissTextColor: Int? = null
-        set(value) {
-            value?.let { tvDismiss.setTextColor(it) }
-        }
-    /**
-     * 数据
-     */
-    var dataList = ArrayList<String>()
-        set(value) {
-            dataList.clear()
-            dataList.addAll(value)
-            mBottomAdapter.update(dataList)
-        }
+class BottomSheetView<T : ActionBaseView>(private val context: Context) :
+    BaseActionSheet<T> {
 
 
-    fun setViewOnItemClick(onItemClick: ActionSheetListener) {
-        mBottomAdapter.mListener = onItemClick
+//    companion object {
+
+//        private var sheetView: BottomSheetView? = null
+//        fun build(context: Context): BottomSheetView {
+//            if (null == sheetView || context != sheetView?.context) {
+//                sheetView = null
+//                sheetView = BottomSheetView(context)
+//            }
+//            return sheetView!!
+//        }
+//    }
+
+    private var mSheetDialog = BottomSheetDialog(context)
+    private var mDefaultView: T? = null
+
+
+    override fun show() {
+        if (context is Activity && context.isFinishing && !mSheetDialog.isShowing) return
+        mSheetDialog.show()
     }
 
-
-    fun setTextColor(color: Int): BottomSheetView {
-        tvDismiss.setTextColor(color)
-        return this
+    override fun dismiss() {
+        if (context is Activity && context.isFinishing && mSheetDialog.isShowing) return
+        mSheetDialog.dismiss()
     }
 
-    companion object {
-        private var sheetView: BottomSheetView? = null
-        fun build(context: Context): BottomSheetView {
-            if (null == sheetView || context != sheetView?.mContext) {
-                sheetView = null
-                sheetView = BottomSheetView(context)
-            }
-            return sheetView!!
-        }
+    override fun setView(view: T) {
+        mDefaultView = view
+        mSheetDialog.setContentView(mDefaultView)
+        //RecyclerView部分透明度 整体蒙层设置不是这
+        mSheetDialog.delegate.findViewById<View>(R.id.design_bottom_sheet)
+            ?.setBackgroundColor(Color.parseColor("#00000000"))
     }
 
-    init {
-        val view = LayoutInflater.from(context).inflate(R.layout.sheet_list_layout, null)
-        val recycleView = view.findViewById<RecyclerView>(R.id.recycleView)
-        tvDismiss = view.findViewById(R.id.tv_dismiss)
-        var layoutManager = LinearLayoutManager(context)
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
-        recycleView.layoutManager = layoutManager
-        mBottomAdapter = BottomSheetAdapter(context)
-        recycleView.adapter = mBottomAdapter
-        setView(view)
-        if (context is ActionSheetDismissListener) {
-            mDismissListener = context
-        }
-        tvDismiss.setOnClickListener { dismiss() }
-    }
+    override fun getView() = mDefaultView!!
+
+
 }
