@@ -1,68 +1,48 @@
 package com.zihuan.view.actionsheet
 
-import android.app.Activity
+import android.content.Context
 import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.util.*
 import kotlin.collections.ArrayList
 
-class BottomSheetView(context: Activity) : BaseBottomSheet(context!!) {
-    internal var tvDismiss: TextView
-    internal var mBottomAdapter: BottomSheetAdapter
-    internal var mStrList: MutableList<String> = ArrayList()
-    fun setViewOnItemClick() { //        mBottomAdapter.setOnItemClick(viewOnItemClick);
-    }
+class BottomSheetView private constructor(context: Context) : BaseActionSheet(context) {
+
+    private var tvDismiss: TextView
+    private var mBottomAdapter: BottomSheetAdapter
+    private var mDismissListener: ActionSheetDismissListener? = null
 
     /**
-     * 设置数据
-     *
-     * @param data
-     * @return
-     */
-    fun setData(vararg data: String?): BottomSheetView {
-        if (data != null) {
-            mStrList.clear()
-            mStrList.addAll(Arrays.asList<String>(*data))
-            mBottomAdapter.update(mStrList)
-        }
-        return this
-    }
-
-    /***
-     * 显示
-     * @return
-     */
-    fun showDialog(): BottomSheetView {
-        showView()
-        return this
-    }
-
-    /***
-     * 隐藏
-     * @return
-     */
-    fun dismissDialog(): BottomSheetView {
-        super.dismissView()
-        return this
-    }
-
-    /***
      * 取消文字
-     * @param text
-     * @return
      */
-    fun setDismissText(text: String?): BottomSheetView {
-        tvDismiss.text = text
-        return this
-    }
-
+    var dismissText: String? = null
+        set(value) {
+            tvDismiss.text = value
+        }
     /***
      * 字体颜色
-     * @param color
-     * @return
      */
+    var dismissTextColor: Int? = null
+        set(value) {
+            value?.let { tvDismiss.setTextColor(it) }
+        }
+    /**
+     * 数据
+     */
+    var dataList = ArrayList<String>()
+        set(value) {
+            dataList.clear()
+            dataList.addAll(value)
+            mBottomAdapter.update(dataList)
+        }
+
+
+    fun setViewOnItemClick(onItemClick: ActionSheetListener) {
+        mBottomAdapter.mListener = onItemClick
+    }
+
+
     fun setTextColor(color: Int): BottomSheetView {
         tvDismiss.setTextColor(color)
         return this
@@ -70,8 +50,8 @@ class BottomSheetView(context: Activity) : BaseBottomSheet(context!!) {
 
     companion object {
         private var sheetView: BottomSheetView? = null
-        fun build(context: Activity): BottomSheetView {
-            if (null == sheetView || context != sheetView!!.mActivity) {
+        fun build(context: Context): BottomSheetView {
+            if (null == sheetView || context != sheetView?.mContext) {
                 sheetView = null
                 sheetView = BottomSheetView(context)
             }
@@ -86,9 +66,12 @@ class BottomSheetView(context: Activity) : BaseBottomSheet(context!!) {
         var layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         recycleView.layoutManager = layoutManager
-        mBottomAdapter = BottomSheetAdapter()
+        mBottomAdapter = BottomSheetAdapter(context)
         recycleView.adapter = mBottomAdapter
         setView(view)
-        tvDismiss.setOnClickListener { dismissDialog() }
+        if (context is ActionSheetDismissListener) {
+            mDismissListener = context
+        }
+        tvDismiss.setOnClickListener { dismiss() }
     }
 }

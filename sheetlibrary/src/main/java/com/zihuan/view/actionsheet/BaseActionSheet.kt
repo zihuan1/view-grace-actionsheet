@@ -1,6 +1,7 @@
 package com.zihuan.view.actionsheet
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Color
 import android.util.DisplayMetrics
 import android.view.View
@@ -12,9 +13,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 /**
  * @author Zihuan
  */
-open class BaseBottomSheet(var mActivity: Activity) {
-    internal var mSheetDialog: BottomSheetDialog = BottomSheetDialog(mActivity)
+open class BaseActionSheet(var mContext: Context) {
+    internal var mSheetDialog: BottomSheetDialog = BottomSheetDialog(mContext)
     internal lateinit var behavior: BottomSheetBehavior<*>
+
     fun setView(view: View) {
         mSheetDialog.setContentView(view)
         //RecyclerView部分透明度 整体蒙层设置不是这
@@ -36,19 +38,27 @@ open class BaseBottomSheet(var mActivity: Activity) {
 
     val screenHeight: Int
         get() {
-            val manager = mActivity.getSystemService(Activity.WINDOW_SERVICE) as WindowManager
+            val manager = mContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
             var dm = DisplayMetrics()
             manager.defaultDisplay.getMetrics(dm)
             return dm.heightPixels
         }
 
-    fun showView() {
-        if (!mActivity.isFinishing) {
+    /***
+     * 显示
+     * @return
+     */
+    fun show() {
+        if (mContext is Activity && !(mContext as Activity).isFinishing) {
             mSheetDialog.show()
         }
     }
 
-    fun dismissView() {
+    /***
+     * 隐藏
+     * @return
+     */
+    fun dismiss() {
         mSheetDialog.dismiss()
     }
 
