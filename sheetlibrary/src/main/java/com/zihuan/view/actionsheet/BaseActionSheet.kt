@@ -10,6 +10,9 @@ interface BaseActionSheet<T : ActionBaseView> {
      */
     fun setView(view: T)
 
+    /**
+     * 获取View
+     */
     fun getView(): T
     /***
      * 显示
