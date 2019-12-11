@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
             defSheetView {
                 dataList = list
             }.show()
-// //           2
+// //           2 自定义用法
 //            zBottomSheetView(DefaultActionView(this)) {
 //                dataList = list
 //            }.show()
@@ -34,10 +34,11 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
 //            }.show()
         }
         tv_.setOnClickListener {
-            it.zPopupView(DefaultActionView(this)) {
+            it.defPopupView {
                 dataList = list
             }.show()
-//            it.defPopupView {
+//            自定义用法
+//            it.zPopupView(DefaultActionView(this)) {
 //                dataList = list
 //            }.show()
         }
