@@ -15,11 +15,29 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
         list.add("一")
         list.add("二")
         tv_1.setOnClickListener {
+            //        //   1 推荐用法
             defSheetView {
                 dataList = list
             }.show()
-
-//            zSheetView(BottomSheetView.build(this)) {
+// //           2
+//            zBottomSheetView(DefaultActionView(this)) {
+//                dataList = list
+//            }.show()
+//            //3
+//            val view = BottomSheetView<DefaultActionView>(this).apply {
+//                var view = DefaultActionView(this@MainActivity)
+//                view.setParentView(this)
+//                setView(view)
+//            }
+//            zSheetView(view) {
+//                dataList = list
+//            }.show()
+        }
+        tv_.setOnClickListener {
+            it.zPopupView(DefaultActionView(this)) {
+                dataList = list
+            }.show()
+//            it.defPopupView {
 //                dataList = list
 //            }.show()
         }

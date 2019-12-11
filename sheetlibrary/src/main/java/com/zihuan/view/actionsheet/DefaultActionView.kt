@@ -6,11 +6,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class DefaultView : ActionBaseView {
+class DefaultActionView : BaseActionView {
 
     private var tvDismiss: TextView
     private var mBottomAdapter: DefViewAdapter
     private var mDismissListener: ActionSheetDismissListener? = null
+
     /**
      * 取消文字
      */
@@ -31,7 +32,7 @@ class DefaultView : ActionBaseView {
             mBottomAdapter.update(dataList)
         }
 
-    constructor(context: Context, dismissListener: BottomSheetView<DefaultView>) : super(context) {
+    constructor(context: Context) : super(context) {
         val view = View.inflate(context, R.layout.sheet_list_layout, this)
         val recycleView = view.findViewById<RecyclerView>(R.id.recycleView)
         tvDismiss = view.findViewById(R.id.tv_dismiss)
@@ -45,10 +46,15 @@ class DefaultView : ActionBaseView {
         }
         dismissText?.let { tvDismiss.text = it }
         dismissTextColor?.let { tvDismiss.setTextColor(it) }
+
+    }
+
+    override fun setParentView(parentView: BaseActionSheet<*>) {
         tvDismiss.setOnClickListener {
             mDismissListener?.onDismiss()
-            dismissListener.dismiss()
+            parentView.dismiss()
         }
     }
+
 
 }
