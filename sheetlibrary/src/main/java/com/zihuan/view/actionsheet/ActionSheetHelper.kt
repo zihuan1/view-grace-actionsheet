@@ -11,7 +11,7 @@ inline fun <T : BaseActionView> Context.zBottomSheetView(view: T, noinline init:
         BottomSheetView<T>(this).zSheetView(view, init)
 
 inline fun <T : BaseActionView> View.zPopupView(view: T, noinline init: T.() -> Unit) =
-        ActionPopupSheet<T>(this.context, this).zSheetView(view, init)
+        ActionPopupSheet<T>(context, this).zSheetView(view, init)
 
 /***
  * 默认实现
@@ -20,4 +20,4 @@ inline fun Context.defSheetView(noinline init: DefaultActionView.() -> Unit) =
         zBottomSheetView(DefaultActionView(this), init)
 
 inline fun View.defPopupView(noinline init: DefaultActionView.() -> Unit) =
-        zPopupView(DefaultActionView(this.context), init)
+        zPopupView(DefaultActionView(context), init)

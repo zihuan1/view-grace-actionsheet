@@ -34,13 +34,18 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
 //            }.show()
         }
         tv_.setOnClickListener {
-            it.defPopupView {
-                dataList = list
-            }.show()
-//            自定义用法
-//            it.zPopupView(DefaultActionView(this)) {
+//            it.defPopupView {
 //                dataList = list
 //            }.show()
+//            自定义用法
+            it.zPopupView(MoreView(this)) {
+//                dataList = list
+            }.show()
+        }
+        tv_3.setOnClickListener {
+            it.defPopupView {
+                dataList = list
+            }.show(100,200)
         }
     }
 

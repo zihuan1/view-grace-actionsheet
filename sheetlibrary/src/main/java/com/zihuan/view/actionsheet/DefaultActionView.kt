@@ -6,10 +6,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class DefaultActionView : BaseActionView {
+class DefaultActionView(context: Context) : BaseActionView(context) {
 
-    private var tvDismiss: TextView
-    private var mBottomAdapter: DefViewAdapter
+    private lateinit var tvDismiss: TextView
+    private lateinit var mBottomAdapter: DefViewAdapter
     private var mDismissListener: ActionSheetDismissListener? = null
 
     /**
@@ -32,8 +32,14 @@ class DefaultActionView : BaseActionView {
             mBottomAdapter.update(dataList)
         }
 
-    constructor(context: Context) : super(context) {
-        val view = View.inflate(context, R.layout.sheet_list_layout, this)
+    override fun setParentView(parentView: BaseActionSheet<*>) {
+        tvDismiss.setOnClickListener {
+            mDismissListener?.onDismiss()
+            parentView.dismiss()
+        }
+    }
+
+    override fun initView(view: View) {
         val recycleView = view.findViewById<RecyclerView>(R.id.recycleView)
         tvDismiss = view.findViewById(R.id.tv_dismiss)
         var layoutManager = LinearLayoutManager(context)
@@ -42,19 +48,13 @@ class DefaultActionView : BaseActionView {
         mBottomAdapter = DefViewAdapter(context)
         recycleView.adapter = mBottomAdapter
         if (context is ActionSheetDismissListener) {
-            mDismissListener = context
+            mDismissListener = context as ActionSheetDismissListener
         }
         dismissText?.let { tvDismiss.text = it }
         dismissTextColor?.let { tvDismiss.setTextColor(it) }
-
     }
 
-    override fun setParentView(parentView: BaseActionSheet<*>) {
-        tvDismiss.setOnClickListener {
-            mDismissListener?.onDismiss()
-            parentView.dismiss()
-        }
-    }
+    override fun getLayoutId() = R.layout.sheet_list_layout
 
 
 }
