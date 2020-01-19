@@ -32,12 +32,28 @@ class DefaultActionView(context: Context) : BaseActionView(context) {
             mBottomAdapter.update(dataList)
         }
 
+    /**
+     * 设置Item监听
+     */
+    fun setItemListener(listener: ActionSheetListener) {
+        mBottomAdapter.setListener(listener)
+    }
+
+    /**
+     * 设置隐藏监听
+     */
+    fun setDismissListener(listener: ActionSheetDismissListener) {
+        mDismissListener = listener
+    }
+
+
     override fun setParentView(parentView: BaseActionSheet<*>) {
         tvDismiss.setOnClickListener {
             mDismissListener?.onDismiss()
             parentView.dismiss()
         }
     }
+
 
     override fun initView(view: View) {
         val recycleView = view.findViewById<RecyclerView>(R.id.recycleView)

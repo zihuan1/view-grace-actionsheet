@@ -16,9 +16,15 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
         list.add("二")
         tv_1.setOnClickListener {
             //        //   1 推荐用法
-            defSheetView {
+            val sheet = defSheetView {
                 dataList = list
-            }.show()
+            }
+            sheet.getView().setItemListener(object : ActionSheetListener {
+                override fun onSheetItemClick(position: Int) {
+                    Toast.makeText(this@MainActivity, "asd位置$position", Toast.LENGTH_SHORT).show()
+                }
+            })
+            sheet.show()
 // //           2 自定义用法
 //            zBottomSheetView(DefaultActionView(this)) {
 //                dataList = list
@@ -34,18 +40,18 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
 //            }.show()
         }
         tv_.setOnClickListener {
-//            it.defPopupView {
+            //            it.defPopupView {
 //                dataList = list
 //            }.show()
 //            自定义用法
             it.zPopupView(MoreView(this)) {
-//                dataList = list
+                //                dataList = list
             }.show()
         }
         tv_3.setOnClickListener {
             it.defPopupView {
                 dataList = list
-            }.show(100,200)
+            }.show(100, 200)
         }
     }
 

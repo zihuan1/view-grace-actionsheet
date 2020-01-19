@@ -14,8 +14,15 @@ import com.zihuan.view.actionsheet.DefViewAdapter.MyHolder
 class DefViewAdapter(any: Any) : Adapter<MyHolder>() {
     private val listModel = ArrayList<String>()
     //    自动实现点击
-      var mListener: ActionSheetListener? =
+    var mListener: ActionSheetListener? =
         if (any is ActionSheetListener) any else null
+
+    /**
+     * 设置监听
+     */
+    fun setListener(listener: ActionSheetListener) {
+        mListener = listener
+    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MyHolder {
         val view = LayoutInflater.from(viewGroup.context)
