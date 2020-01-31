@@ -25,7 +25,7 @@ class ActionPopupSheet<T : BaseActionView>(
     override fun show(xoff: Int, yoff: Int) {
         // 第一个参数是要将PopupWindow放到的View，第二个参数是位置，第三第四是偏移值
 //        mPopupWindow.showAtLocation(rootView, Gravity.BOTTOM, 0, 0)
-        mPopupWindow.showAsDropDown(rootView)
+        mPopupWindow.showAsDropDown(rootView, xoff, yoff)
         // 适配 android 7.0
 //            val point = IntArray(2)
 //            rootView.getLocationInWindow(point)
