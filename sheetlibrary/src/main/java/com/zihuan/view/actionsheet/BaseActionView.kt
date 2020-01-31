@@ -13,5 +13,5 @@ abstract class BaseActionView : FrameLayout {
     abstract fun setParentView(parentView: BaseActionSheet<*>)
     abstract fun initView(view: View)
     abstract fun getLayoutId(): Int
-    
+
 }
