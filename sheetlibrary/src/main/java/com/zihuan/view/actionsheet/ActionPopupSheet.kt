@@ -54,5 +54,6 @@ class ActionPopupSheet<T : BaseActionView>(
             true
         }
         init(view)
+        view.setParentView(this)
     }
 }
