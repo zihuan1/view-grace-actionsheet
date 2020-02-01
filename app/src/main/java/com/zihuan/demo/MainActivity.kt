@@ -18,12 +18,11 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
             //        //   1 推荐用法
             val sheet = defSheetView {
                 dataList = list
-            }
-            sheet.getView().setItemListener(object : ActionSheetListener {
-                override fun onSheetItemClick(position: Int) {
+                setItemListener(ActionSheetListener { position ->
                     Toast.makeText(this@MainActivity, "asd位置$position", Toast.LENGTH_SHORT).show()
-                }
-            })
+dismiss()
+                })
+            }
             sheet.show()
 // //           2 自定义用法
 //            zBottomSheetView(DefaultActionView(this)) {

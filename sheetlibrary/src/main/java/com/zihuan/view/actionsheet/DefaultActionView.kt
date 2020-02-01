@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class DefaultActionView(context: Context) : BaseActionView(context) {
-
     private lateinit var tvDismiss: TextView
     private lateinit var mBottomAdapter: DefViewAdapter
     private var mDismissListener: ActionSheetDismissListener? = null
@@ -46,14 +45,17 @@ class DefaultActionView(context: Context) : BaseActionView(context) {
         mDismissListener = listener
     }
 
+    private lateinit var mParentView: BaseActionSheet<*>
 
     override fun setParentView(parentView: BaseActionSheet<*>) {
+        mParentView=parentView
         tvDismiss.setOnClickListener {
             mDismissListener?.onDismiss()
             parentView.dismiss()
         }
     }
 
+    override fun getParentView()=mParentView
 
     override fun initView(view: View) {
         val recycleView = view.findViewById<RecyclerView>(R.id.recycleView)
