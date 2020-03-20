@@ -54,9 +54,9 @@ class DefaultActionView(context: Context) : BaseActionView(context) {
         }
     }
 
-
+    lateinit var recycleView: RecyclerView
     override fun initView(view: View) {
-        val recycleView = view.findViewById<RecyclerView>(R.id.recycleView)
+        recycleView = view.findViewById(R.id.recycleView)
         tvDismiss = view.findViewById(R.id.tv_dismiss)
         var layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -70,6 +70,10 @@ class DefaultActionView(context: Context) : BaseActionView(context) {
         dismissTextColor?.let { tvDismiss.setTextColor(it) }
     }
 
+
+    fun addDecoration(decor: RecyclerView.ItemDecoration){
+        recycleView.addItemDecoration(decor)
+    }
     override fun getLayoutId() = R.layout.sheet_list_layout
 
 

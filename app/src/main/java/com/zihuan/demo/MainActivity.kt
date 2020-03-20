@@ -3,6 +3,7 @@ package com.zihuan.demo
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.zihuan.view.actionsheet.*
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -19,11 +20,17 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
             val sheet = defSheetView {
                 dataList = list
             }
-            sheet.getView().setItemListener(object : ActionSheetListener {
-                override fun onSheetItemClick(position: Int) {
-                    Toast.makeText(this@MainActivity, "asd位置$position", Toast.LENGTH_SHORT).show()
-                }
-            })
+//            sheet.getView().setItemListener(object : ActionSheetListener {
+//                override fun onSheetItemClick(position: Int) {
+//                    Toast.makeText(this@MainActivity, "asd位置$position", Toast.LENGTH_SHORT).show()
+//                }
+//            })
+//            sheet.getView().setDismissListener(object :ActionSheetDismissListener{
+//                override fun onDismiss() {
+//                    Toast.makeText(this@MainActivity, "取消了了了了", Toast.LENGTH_SHORT).show()
+//                }
+//            })
+            sheet.getView().addDecoration(RecycleViewDividerJava(this, LinearLayoutManager.VERTICAL))
             sheet.show()
 // //           2 自定义用法
 //            zBottomSheetView(DefaultActionView(this)) {
