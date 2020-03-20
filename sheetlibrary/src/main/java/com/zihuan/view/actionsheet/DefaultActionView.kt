@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class DefaultActionView(context: Context) : BaseActionView(context) {
-
     private lateinit var tvDismiss: TextView
     private lateinit var mBottomAdapter: DefViewAdapter
     private var mDismissListener: ActionSheetDismissListener? = null
@@ -46,8 +45,10 @@ class DefaultActionView(context: Context) : BaseActionView(context) {
         mDismissListener = listener
     }
 
+    private lateinit var mParentView: BaseActionSheet<*>
 
     override fun setParentView(parentView: BaseActionSheet<*>) {
+        mParentView = parentView
         tvDismiss.setOnClickListener {
             mDismissListener?.onDismiss()
             parentView.dismiss()
@@ -55,6 +56,8 @@ class DefaultActionView(context: Context) : BaseActionView(context) {
     }
 
     lateinit var recycleView: RecyclerView
+    override fun getParentView() = mParentView
+
     override fun initView(view: View) {
         recycleView = view.findViewById(R.id.recycleView)
         tvDismiss = view.findViewById(R.id.tv_dismiss)
@@ -71,9 +74,10 @@ class DefaultActionView(context: Context) : BaseActionView(context) {
     }
 
 
-    fun addDecoration(decor: RecyclerView.ItemDecoration){
+    fun addDecoration(decor: RecyclerView.ItemDecoration) {
         recycleView.addItemDecoration(decor)
     }
+
     override fun getLayoutId() = R.layout.sheet_list_layout
 
 

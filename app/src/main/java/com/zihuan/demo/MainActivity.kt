@@ -15,12 +15,13 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
         var list = ArrayList<String>()
         list.add("一")
         list.add("二")
+        //        //   1 推荐用法
+        val sheet = defSheetView {
+            dataList = list
+        }
         tv_1.setOnClickListener {
-            //        //   1 推荐用法
-            val sheet = defSheetView {
-                dataList = list
-            }
-//            sheet.getView().setItemListener(object : ActionSheetListener {
+
+            //            sheet.getView().setItemListener(object : ActionSheetListener {
 //                override fun onSheetItemClick(position: Int) {
 //                    Toast.makeText(this@MainActivity, "asd位置$position", Toast.LENGTH_SHORT).show()
 //                }
@@ -30,8 +31,15 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
 //                    Toast.makeText(this@MainActivity, "取消了了了了", Toast.LENGTH_SHORT).show()
 //                }
 //            })
-            sheet.getView().addDecoration(RecycleViewDividerJava(this, LinearLayoutManager.VERTICAL))
+            sheet.getView()
+                .addDecoration(RecycleViewDividerJava(this, LinearLayoutManager.VERTICAL))
+            sheet.getView().setItemListener(ActionSheetListener { position ->
+                Toast.makeText(this@MainActivity, "asd位置$position", Toast.LENGTH_SHORT).show()
+                sheet.dismiss()
+            })
             sheet.show()
+        }
+
 // //           2 自定义用法
 //            zBottomSheetView(DefaultActionView(this)) {
 //                dataList = list
@@ -45,7 +53,6 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
 //            zSheetView(view) {
 //                dataList = list
 //            }.show()
-        }
         tv_.setOnClickListener {
             //            it.defPopupView {
 //                dataList = list
@@ -55,19 +62,20 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
                 //                dataList = list
             }.show()
         }
-        tv_3.setOnClickListener {
+        tv_3.setOnClickListener{
             it.defPopupView {
                 dataList = list
             }.show(100, 200)
         }
-    }
 
-    override fun onSheetItemClick(position: Int) {
-        Toast.makeText(this, "位置$position", Toast.LENGTH_SHORT).show()
-    }
+}
 
-    override fun onDismiss() {
-        Toast.makeText(this, "取消了", Toast.LENGTH_SHORT).show()
-    }
+override fun onSheetItemClick(position: Int) {
+    Toast.makeText(this, "位置$position", Toast.LENGTH_SHORT).show()
+}
+
+override fun onDismiss() {
+    Toast.makeText(this, "取消了", Toast.LENGTH_SHORT).show()
+}
 
 }

@@ -6,13 +6,16 @@ import com.zihuan.view.actionsheet.BaseActionSheet
 import com.zihuan.view.actionsheet.BaseActionView
 
  class MoreView : BaseActionView {
+     override fun getParentView()=mParentView
 
-    constructor(context: Context) : super(context) {
+
+     constructor(context: Context) : super(context) {
 
     }
 
+     lateinit var mParentView: BaseActionSheet<*>
     override fun setParentView(parentView: BaseActionSheet<*>) {
-
+        mParentView=parentView
     }
 
      override fun initView(view: View) {
