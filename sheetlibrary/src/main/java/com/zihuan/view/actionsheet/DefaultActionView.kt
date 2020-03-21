@@ -10,6 +10,7 @@ class DefaultActionView(context: Context) : BaseActionView(context) {
     private lateinit var tvDismiss: TextView
     private lateinit var mBottomAdapter: DefViewAdapter
     private var mDismissListener: ActionSheetDismissListener? = null
+    private lateinit var mParentView: BaseActionSheet<*>
 
     /**
      * 取消文字
@@ -45,7 +46,24 @@ class DefaultActionView(context: Context) : BaseActionView(context) {
         mDismissListener = listener
     }
 
-    private lateinit var mParentView: BaseActionSheet<*>
+    /**
+     * 添加分割线
+     */
+    fun addDecoration(decor: RecyclerView.ItemDecoration) {
+        recycleView.addItemDecoration(decor)
+    }
+
+    /**
+     * 更新指定位置的数据
+     */
+    fun updatePositionData(position: Int, value: String) {
+        dataList[position] = value
+        mBottomAdapter.update(dataList)
+    }
+
+    fun update() {
+        mBottomAdapter.notifyDataSetChanged()
+    }
 
     override fun setParentView(parentView: BaseActionSheet<*>) {
         mParentView = parentView
@@ -73,10 +91,6 @@ class DefaultActionView(context: Context) : BaseActionView(context) {
         dismissTextColor?.let { tvDismiss.setTextColor(it) }
     }
 
-
-    fun addDecoration(decor: RecyclerView.ItemDecoration) {
-        recycleView.addItemDecoration(decor)
-    }
 
     override fun getLayoutId() = R.layout.sheet_list_layout
 
