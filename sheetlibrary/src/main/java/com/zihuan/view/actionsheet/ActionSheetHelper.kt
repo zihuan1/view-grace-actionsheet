@@ -4,20 +4,25 @@ import android.content.Context
 import android.view.View
 
 
-inline fun <T : BaseActionView> BaseActionSheet<T>.zSheetView(view: T, noinline init: T.() -> Unit) =
-        apply { setView(view, init) }
+inline fun <reified T : BaseActionView> BaseActionSheet<T>.sheetView(
+    context: Context,
+    noinline init: T.() -> Unit
+) =
+    apply {
+        val view = T::class.java.getDeclaredConstructor(Context::class.java).newInstance(context)
+        setView(view, init)
+    }
 
-inline fun <T : BaseActionView> Context.zBottomSheetView(view: T, noinline init: T.() -> Unit) =
-        BottomSheetView<T>(this).zSheetView(view, init)
+inline fun <reified T : BaseActionView> Context.bottomSheetView(noinline init: T.() -> Unit) =
+    BottomSheetView<T>(this).sheetView(this, init)
 
-inline fun <T : BaseActionView> View.zPopupView(view: T, noinline init: T.() -> Unit) =
-        ActionPopupSheet<T>(context, this).zSheetView(view, init)
+inline fun <reified T : BaseActionView> View.sheetView(noinline init: T.() -> Unit) =
+    ActionPopupSheet<T>(context, this).sheetView(context, init)
 
 /***
  * 默认实现
  */
-inline fun Context.defSheetView(noinline init: DefaultActionView.() -> Unit) =
-        zBottomSheetView(DefaultActionView(this), init)
+inline fun Context.defBottomSheetView(noinline init: DefaultActionView.() -> Unit) =
+    bottomSheetView(init)
 
-inline fun View.defPopupView(noinline init: DefaultActionView.() -> Unit) =
-        zPopupView(DefaultActionView(context), init)
+inline fun View.defSheetView(noinline init: DefaultActionView.() -> Unit) = sheetView(init)

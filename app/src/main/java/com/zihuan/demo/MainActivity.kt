@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
         list.add("一")
         list.add("二")
         //        //   1 推荐用法
-        val sheet = defSheetView {
+        val sheet = defBottomSheetView {
             dataList = list
         }
         tv_1.setOnClickListener {
@@ -53,29 +53,29 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
 //            zSheetView(view) {
 //                dataList = list
 //            }.show()
-        tv_.setOnClickListener {
+        tv_top.setOnClickListener {
             //            it.defPopupView {
 //                dataList = list
 //            }.show()
 //            自定义用法
-            it.zPopupView(MoreView(this)) {
+            it.sheetView<MoreView> {
                 //                dataList = list
             }.show()
         }
-        tv_3.setOnClickListener{
-            it.defPopupView {
+        tv_bottom.setOnClickListener {
+            it.defSheetView {
                 dataList = list
             }.show(100, 200)
         }
 
-}
+    }
 
-override fun onSheetItemClick(position: Int) {
-    Toast.makeText(this, "位置$position", Toast.LENGTH_SHORT).show()
-}
+    override fun onSheetItemClick(position: Int) {
+        Toast.makeText(this, "位置$position", Toast.LENGTH_SHORT).show()
+    }
 
-override fun onDismiss() {
-    Toast.makeText(this, "取消了", Toast.LENGTH_SHORT).show()
-}
+    override fun onDismiss() {
+        Toast.makeText(this, "取消了", Toast.LENGTH_SHORT).show()
+    }
 
 }
