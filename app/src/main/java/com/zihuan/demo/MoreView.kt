@@ -1,26 +1,30 @@
 package com.zihuan.demo
 
 import android.content.Context
+import android.util.Log
 import android.view.View
+import com.zihuan.view.actionsheet.ActionSheetStateListener
 import com.zihuan.view.actionsheet.BaseActionSheet
 import com.zihuan.view.actionsheet.BaseActionView
 
- class MoreView : BaseActionView {
-     override fun getParentView()=mParentView
+class MoreView : BaseActionView, ActionSheetStateListener {
 
 
-     constructor(context: Context) : super(context) {
+    constructor(context: Context,parentView: BaseActionSheet<*>) : super(context,parentView)
 
+
+    override fun initView(view: View) {
+        setStateListener(this)
+//        parentView.touchOutside(false)
     }
 
-     lateinit var mParentView: BaseActionSheet<*>
-    override fun setParentView(parentView: BaseActionSheet<*>) {
-        mParentView=parentView
+    override fun getLayoutId() = R.layout.coustom_layout
+    override fun onDismiss() {
+        Log.e("隐藏","隐藏")
     }
 
-     override fun initView(view: View) {
-     }
+    override fun onShow() {
+        Log.e("隐藏","显示")
+    }
 
-     override fun getLayoutId()=R.layout.coustom_layout
-
- }
+}

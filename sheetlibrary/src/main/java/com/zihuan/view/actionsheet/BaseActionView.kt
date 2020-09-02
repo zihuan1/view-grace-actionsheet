@@ -6,17 +6,27 @@ import android.widget.FrameLayout
 
 abstract class BaseActionView : FrameLayout {
 
-    constructor(context: Context) : super(context) {
+    var parentView: BaseActionSheet<*>
+
+    constructor(context: Context, parentView: BaseActionSheet<*>) : super(context) {
+        this.parentView = parentView
         initView(View.inflate(context, getLayoutId(), this))
     }
 
-    abstract fun setParentView(parentView: BaseActionSheet<*>)
-    abstract fun getParentView(): BaseActionSheet<*>
     abstract fun initView(view: View)
     abstract fun getLayoutId(): Int
 
+    var listener: ActionSheetStateListener? = null
+    fun setStateListener(listener: ActionSheetStateListener) {
+        this.listener = listener
+    }
+
+    fun show(xoff: Int = 0, yoff: Int = 0) {
+        parentView.show(xoff, yoff)
+    }
+
     fun dismiss() {
-        getParentView().dismiss()
+        parentView.dismiss()
     }
 
 

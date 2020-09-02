@@ -4,12 +4,10 @@ import android.content.Context
 import android.view.View
 
 
-inline fun <reified T : BaseActionView> BaseActionSheet<T>.sheetView(
-    context: Context,
-    noinline init: T.() -> Unit
-) =
+inline fun <reified T : BaseActionView> BaseActionSheet<T>.sheetView(context: Context, noinline init: T.() -> Unit) =
     apply {
-        val view = T::class.java.getDeclaredConstructor(Context::class.java).newInstance(context)
+        val view = T::class.java.getDeclaredConstructor(Context::class.java,BaseActionSheet::class.java)
+            .newInstance(context,this)
         setView(view, init)
     }
 

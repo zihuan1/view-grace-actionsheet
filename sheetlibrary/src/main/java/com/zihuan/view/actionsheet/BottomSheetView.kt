@@ -29,10 +29,13 @@ class BottomSheetView<T : BaseActionView>(private val context: Context) : BaseAc
         //RecyclerView部分透明度 整体蒙层设置不是这
         mSheetDialog.delegate.findViewById<View>(R.id.design_bottom_sheet)
                 ?.setBackgroundColor(Color.parseColor("#00000000"))
-        view.setParentView(this)
         init(getView())
     }
 
     override fun getView() = mDefaultView!!
+
+    override fun touchOutside(outside: Boolean) {
+        mSheetDialog.setCanceledOnTouchOutside(outside)
+    }
 
 }

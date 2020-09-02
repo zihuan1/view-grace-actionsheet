@@ -6,11 +6,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class DefaultActionView(context: Context) : BaseActionView(context) {
+class DefaultActionView(context: Context,parentView: BaseActionSheet<*>) : BaseActionView(context,parentView) {
     private lateinit var tvDismiss: TextView
     private lateinit var mBottomAdapter: DefViewAdapter
-    private var mDismissListener: ActionSheetDismissListener? = null
-    private lateinit var mParentView: BaseActionSheet<*>
+    private var mDismissListener: ActionSheetStateListener? = null
 
     /**
      * 取消文字
@@ -42,7 +41,7 @@ class DefaultActionView(context: Context) : BaseActionView(context) {
     /**
      * 设置隐藏监听
      */
-    fun setDismissListener(listener: ActionSheetDismissListener) {
+    fun setDismissListener(listener: ActionSheetStateListener) {
         mDismissListener = listener
     }
 
@@ -65,16 +64,8 @@ class DefaultActionView(context: Context) : BaseActionView(context) {
         mBottomAdapter.notifyDataSetChanged()
     }
 
-    override fun setParentView(parentView: BaseActionSheet<*>) {
-        mParentView = parentView
-        tvDismiss.setOnClickListener {
-            mDismissListener?.onDismiss()
-            parentView.dismiss()
-        }
-    }
 
     lateinit var recycleView: RecyclerView
-    override fun getParentView() = mParentView
 
     override fun initView(view: View) {
         recycleView = view.findViewById(R.id.recycleView)
@@ -84,11 +75,16 @@ class DefaultActionView(context: Context) : BaseActionView(context) {
         recycleView.layoutManager = layoutManager
         mBottomAdapter = DefViewAdapter(context)
         recycleView.adapter = mBottomAdapter
-        if (context is ActionSheetDismissListener) {
-            mDismissListener = context as ActionSheetDismissListener
+        if (context is ActionSheetStateListener) {
+            mDismissListener = context as ActionSheetStateListener
         }
         dismissText?.let { tvDismiss.text = it }
         dismissTextColor?.let { tvDismiss.setTextColor(it) }
+        tvDismiss.setOnClickListener {
+            mDismissListener?.onDismiss()
+            parentView.dismiss()
+        }
+//        parentView.touchOutside(false)
     }
 
 

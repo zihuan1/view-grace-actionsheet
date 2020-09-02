@@ -26,4 +26,9 @@ interface BaseActionSheet<T : BaseActionView> {
      */
     fun dismiss()
 
+    /**
+     * 点击边缘是否可隐藏
+     */
+    fun touchOutside(outside:Boolean)
+
 }

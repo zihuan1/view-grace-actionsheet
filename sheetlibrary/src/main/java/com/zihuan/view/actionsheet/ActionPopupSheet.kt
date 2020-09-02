@@ -32,6 +32,7 @@ class ActionPopupSheet<T : BaseActionView>(
 //                0,
 //                point[1] + rootView.height
 //            )
+        mDefaultView?.listener?.onShow()
     }
 
 
@@ -41,16 +42,20 @@ class ActionPopupSheet<T : BaseActionView>(
         mPopupWindow.setBackgroundDrawable(context.resources.getDrawable(R.color.action_sheet_transparent))
         mPopupWindow.width = WindowManager.LayoutParams.MATCH_PARENT
         mPopupWindow.height = WindowManager.LayoutParams.WRAP_CONTENT
-        mPopupWindow.isTouchable = true
-        mPopupWindow.isFocusable = true
-        mPopupWindow.isOutsideTouchable = true
+        mPopupWindow.isTouchable = outside
+        mPopupWindow.isFocusable = outside
+        mPopupWindow.isOutsideTouchable = outside
         mPopupWindow.contentView = mDefaultView
-        mPopupWindow.contentView.setOnTouchListener { v, event ->
-            mPopupWindow.isFocusable = false
-            mPopupWindow.dismiss()
-            true
+        mPopupWindow.setOnDismissListener {
+            mDefaultView?.listener?.onDismiss()
         }
         init(view)
-        view.setParentView(this)
     }
+
+    private var outside = true
+    override fun touchOutside(outside: Boolean) {
+        this.outside = outside
+    }
+
+
 }

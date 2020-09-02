@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.zihuan.view.actionsheet.*
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismissListener {
+class MainActivity : AppCompatActivity(), ActionSheetListener,
+    ActionSheetStateListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
 //                    Toast.makeText(this@MainActivity, "asd位置$position", Toast.LENGTH_SHORT).show()
 //                }
 //            })
-//            sheet.getView().setDismissListener(object :ActionSheetDismissListener{
+//            sheet.getView().setDismissListener(object :ActionSheetStateListener{
 //                override fun onDismiss() {
 //                    Toast.makeText(this@MainActivity, "取消了了了了", Toast.LENGTH_SHORT).show()
 //                }
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
 //            自定义用法
             it.sheetView<MoreView> {
                 //                dataList = list
+
             }.show()
         }
         tv_bottom.setOnClickListener {
@@ -76,6 +78,10 @@ class MainActivity : AppCompatActivity(), ActionSheetListener, ActionSheetDismis
 
     override fun onDismiss() {
         Toast.makeText(this, "取消了", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onShow() {
+
     }
 
 }
