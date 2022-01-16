@@ -38,4 +38,9 @@ class BottomSheetView<T : BaseActionView>(private val context: Context) : BaseAc
         mSheetDialog.setCanceledOnTouchOutside(outside)
     }
 
+    override fun getSheetDialog(): Any {
+         return mSheetDialog
+    }
+
+
 }

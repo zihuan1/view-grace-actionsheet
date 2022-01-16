@@ -4,13 +4,14 @@ import android.content.Context
 import android.view.View
 import android.view.WindowManager
 import android.widget.PopupWindow
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class ActionPopupSheet<T : BaseActionView>(
     private val context: Context,
     private val rootView: View
 ) : BaseActionSheet<T> {
 
-    private var mPopupWindow = PopupWindow(context)
+      var mPopupWindow = PopupWindow(context)
     private var mDefaultView: T? = null
 
     override fun dismiss() {
@@ -56,6 +57,8 @@ class ActionPopupSheet<T : BaseActionView>(
     override fun touchOutside(outside: Boolean) {
         this.outside = outside
     }
+
+    override fun getSheetDialog() = mPopupWindow
 
 
 }
