@@ -14,12 +14,18 @@ class MainActivity : AppCompatActivity(), ActionSheetListener,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         var list = ArrayList<String>()
-        list.add("一")
-        list.add("二")
+        (1..20).forEach {
+            list.add("按钮 $it")
+        }
         //        //   1 推荐用法
         val sheet = defBottomSheetView {
             dataList = list
         }
+        sheet.setHideable(false)
+            .setState(ActionSheetHelper.STATE_EXPANDED)
+            .touchOutside(false)
+            .setDimAmount(.1f)
+//            .setPeekHeight(2244)
         tv_1.setOnClickListener {
 
             //            sheet.getView().setItemListener(object : ActionSheetListener {
@@ -58,16 +64,8 @@ class MainActivity : AppCompatActivity(), ActionSheetListener,
             //            it.defPopupView {
 //                dataList = list
 //            }.show()
-//            自定义用法
-            it.sheetView<MoreView> {
-                //                dataList = list
-
-            }.show()
         }
         tv_bottom.setOnClickListener {
-            it.defSheetView {
-                dataList = list
-            }.show(100, 200)
         }
 
     }

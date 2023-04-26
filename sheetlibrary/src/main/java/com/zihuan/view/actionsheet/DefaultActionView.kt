@@ -90,5 +90,4 @@ class DefaultActionView(context: Context,parentView: BaseActionSheet<*>) : BaseA
 
     override fun getLayoutId() = R.layout.sheet_list_layout
 
-
 }
