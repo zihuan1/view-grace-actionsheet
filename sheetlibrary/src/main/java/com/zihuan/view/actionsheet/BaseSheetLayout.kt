@@ -66,9 +66,9 @@ interface BaseSheetLayout<T : BaseSheetContentView> {
      */
     fun setDimAmount(amount: Float): BaseSheetLayout<T>
 
-    fun setShowListener(listener: BottomSheetShowListener)
+    fun setShowListener(listener: BottomSheetShowListener): BaseSheetLayout<T>
 
-    fun setDismissListener(listener: BottomSheetDismissListener)
+    fun setDismissListener(listener: BottomSheetDismissListener): BaseSheetLayout<T>
 
-    fun setStateListener(listener: BottomSheetListener)
+    fun setStatusListener(listener: BottomSheetListener): BaseSheetLayout<T>
 }

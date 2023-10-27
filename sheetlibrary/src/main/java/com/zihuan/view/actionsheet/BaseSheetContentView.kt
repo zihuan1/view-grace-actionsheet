@@ -18,17 +18,6 @@ abstract class BaseSheetContentView : FrameLayout {
 
     abstract fun initView(view: View)
     abstract fun getLayoutId(): Int
-    fun setShowListener(listener: BottomSheetShowListener) {
-        parentView.setShowListener(listener)
-    }
-
-    fun setDismissListener(listener: BottomSheetDismissListener) {
-        parentView.setDismissListener(listener)
-    }
-
-    fun setStateListener(listener: BottomSheetListener) {
-        parentView.setStateListener(listener)
-    }
 
     fun show(xoff: Int = 0, yoff: Int = 0) {
         parentView.show(xoff, yoff)
@@ -37,6 +26,5 @@ abstract class BaseSheetContentView : FrameLayout {
     fun dismiss() {
         parentView.dismiss()
     }
-
 
 }

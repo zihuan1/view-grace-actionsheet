@@ -1,7 +1,6 @@
 package com.zihuan.demo
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +10,7 @@ import com.zihuan.view.actionsheet.listener.BottomSheetListener
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),
-    BottomSheetItemListener,BottomSheetListener {
+        BottomSheetItemListener, BottomSheetListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,20 +24,17 @@ class MainActivity : AppCompatActivity(),
             dataList = list
         }
         sheet.setHideable(false)
-            .setState(ActionSheetHelper.STATE_EXPANDED)
+                .setState(ActionSheetHelper.STATE_EXPANDED)
 //            .touchOutside(false)
-            .setDimAmount(.1f)
+                .setDimAmount(.1f)
 //            .setPeekHeight(2244)
-            .getView().setStateListener(this)
-//            .getView().setStateListener(object : BottomSheetListener() {
-//                override fun onShow() {
-//                    Log.e("测试", "显示监听")
+//                .setShowListener {
+//                    Toast.makeText(this, "显示了", Toast.LENGTH_SHORT).show()
 //                }
-//
-//                override fun onDismiss() {
-//                    Log.e("测试", "隐藏监听")
+//                .setDismissListener {
+//                    Toast.makeText(this, "隐藏", Toast.LENGTH_SHORT).show()
 //                }
-//            })
+                .setStatusListener(this)
 
         tv_1.setOnClickListener {
 
@@ -53,7 +49,7 @@ class MainActivity : AppCompatActivity(),
 //                }
 //            })
             sheet.getView()
-                .addDecoration(RecycleViewDividerJava(this, LinearLayoutManager.VERTICAL))
+                    .addDecoration(RecycleViewDividerJava(this, LinearLayoutManager.VERTICAL))
             sheet.getView().setItemListener { position ->
                 Toast.makeText(this@MainActivity, "asd位置$position", Toast.LENGTH_SHORT).show()
                 sheet.dismiss()
@@ -88,12 +84,13 @@ class MainActivity : AppCompatActivity(),
         Toast.makeText(this, "位置$position", Toast.LENGTH_SHORT).show()
     }
 
+    override fun onShow() {
+        Toast.makeText(this, "显示了", Toast.LENGTH_SHORT).show()
+    }
+
     override fun onDismiss() {
         Toast.makeText(this, "取消了", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onShow() {
-        Toast.makeText(this, "显示了", Toast.LENGTH_SHORT).show()
-    }
 
 }

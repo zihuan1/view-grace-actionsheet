@@ -79,15 +79,20 @@ class BottomSheetLayout<T : BaseSheetContentView>(private val context: Context) 
         return this
     }
 
-    override fun setShowListener(listener: BottomSheetShowListener) {
+    override fun setShowListener(listener: BottomSheetShowListener): BottomSheetLayout<T> {
         showListener = listener
+        return this
     }
 
-    override fun setDismissListener(listener: BottomSheetDismissListener) {
+    override fun setDismissListener(listener: BottomSheetDismissListener): BottomSheetLayout<T>  {
         dismissListener = listener
+        return this
+
     }
 
-    override fun setStateListener(listener: BottomSheetListener) {
+    override fun setStatusListener(listener: BottomSheetListener): BottomSheetLayout<T>  {
         this.listener = listener
+        return this
+
     }
 }
