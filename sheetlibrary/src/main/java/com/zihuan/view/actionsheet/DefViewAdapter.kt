@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.zihuan.view.actionsheet.DefViewAdapter.MyHolder
+import com.zihuan.view.actionsheet.listener.BottomSheetItemListener
 
 /**
  * @author zihuan
@@ -14,13 +15,13 @@ import com.zihuan.view.actionsheet.DefViewAdapter.MyHolder
 class DefViewAdapter(any: Any) : Adapter<MyHolder>() {
     private val listModel = ArrayList<String>()
     //    自动实现点击
-    var mListener: ActionSheetListener? =
-        if (any is ActionSheetListener) any else null
+    var mListener: BottomSheetItemListener? =
+        if (any is BottomSheetItemListener) any else null
 
     /**
      * 设置监听
      */
-    fun setListener(listener: ActionSheetListener) {
+    fun setListener(listener: BottomSheetItemListener) {
         mListener = listener
     }
 

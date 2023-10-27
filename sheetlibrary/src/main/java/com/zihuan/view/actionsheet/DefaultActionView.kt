@@ -5,11 +5,12 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.zihuan.view.actionsheet.listener.BottomSheetItemListener
 
-class DefaultActionView(context: Context,parentView: BaseActionSheet<*>) : BaseActionView(context,parentView) {
+class DefaultActionView(context: Context, parentView: BaseSheetLayout<*>) :
+    BaseSheetContentView(context, parentView) {
     private lateinit var tvDismiss: TextView
     private lateinit var mBottomAdapter: DefViewAdapter
-    private var mDismissListener: ActionSheetStateListener? = null
 
     /**
      * 取消文字
@@ -34,15 +35,8 @@ class DefaultActionView(context: Context,parentView: BaseActionSheet<*>) : BaseA
     /**
      * 设置Item监听
      */
-    fun setItemListener(listener: ActionSheetListener) {
+    fun setItemListener(listener: BottomSheetItemListener) {
         mBottomAdapter.setListener(listener)
-    }
-
-    /**
-     * 设置隐藏监听
-     */
-    fun setDismissListener(listener: ActionSheetStateListener) {
-        mDismissListener = listener
     }
 
     /**
@@ -75,13 +69,9 @@ class DefaultActionView(context: Context,parentView: BaseActionSheet<*>) : BaseA
         recycleView.layoutManager = layoutManager
         mBottomAdapter = DefViewAdapter(context)
         recycleView.adapter = mBottomAdapter
-        if (context is ActionSheetStateListener) {
-            mDismissListener = context as ActionSheetStateListener
-        }
         dismissText?.let { tvDismiss.text = it }
         dismissTextColor?.let { tvDismiss.setTextColor(it) }
         tvDismiss.setOnClickListener {
-            mDismissListener?.onDismiss()
             parentView.dismiss()
         }
 //        parentView.touchOutside(false)

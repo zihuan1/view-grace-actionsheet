@@ -1,7 +1,6 @@
 package com.zihuan.view.actionsheet
 
 import android.content.Context
-import android.view.View
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 object ActionSheetHelper {
@@ -21,19 +20,19 @@ object ActionSheetHelper {
     const val STATE_HIDDEN = BottomSheetBehavior.STATE_HIDDEN
 }
 
-inline fun <reified T : BaseActionView> BaseActionSheet<T>.sheetView(
+inline fun <reified T : BaseSheetContentView> BaseSheetLayout<T>.sheetView(
     context: Context,
     noinline init: T.() -> Unit
 ) =
     apply {
         val view =
-            T::class.java.getDeclaredConstructor(Context::class.java, BaseActionSheet::class.java)
+            T::class.java.getDeclaredConstructor(Context::class.java, BaseSheetLayout::class.java)
                 .newInstance(context, this)
         setView(view, init)
     }
 
-inline fun <reified T : BaseActionView> Context.bottomSheetView(noinline init: T.() -> Unit) =
-    BottomSheetView<T>(this).sheetView(this, init)
+inline fun <reified T : BaseSheetContentView> Context.bottomSheetView(noinline init: T.() -> Unit) =
+    BottomSheetLayout<T>(this).sheetView(this, init)
 
 /***
  * 默认实现

@@ -1,20 +1,23 @@
 package com.zihuan.demo
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zihuan.view.actionsheet.*
+import com.zihuan.view.actionsheet.listener.BottomSheetItemListener
+import com.zihuan.view.actionsheet.listener.BottomSheetListener
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), ActionSheetListener,
-    ActionSheetStateListener {
+class MainActivity : AppCompatActivity(),
+    BottomSheetItemListener,BottomSheetListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         var list = ArrayList<String>()
-        (1..20).forEach {
+        (1..6).forEach {
             list.add("按钮 $it")
         }
         //        //   1 推荐用法
@@ -23,9 +26,20 @@ class MainActivity : AppCompatActivity(), ActionSheetListener,
         }
         sheet.setHideable(false)
             .setState(ActionSheetHelper.STATE_EXPANDED)
-            .touchOutside(false)
+//            .touchOutside(false)
             .setDimAmount(.1f)
 //            .setPeekHeight(2244)
+            .getView().setStateListener(this)
+//            .getView().setStateListener(object : BottomSheetListener() {
+//                override fun onShow() {
+//                    Log.e("测试", "显示监听")
+//                }
+//
+//                override fun onDismiss() {
+//                    Log.e("测试", "隐藏监听")
+//                }
+//            })
+
         tv_1.setOnClickListener {
 
             //            sheet.getView().setItemListener(object : ActionSheetListener {
@@ -40,10 +54,10 @@ class MainActivity : AppCompatActivity(), ActionSheetListener,
 //            })
             sheet.getView()
                 .addDecoration(RecycleViewDividerJava(this, LinearLayoutManager.VERTICAL))
-            sheet.getView().setItemListener(ActionSheetListener { position ->
+            sheet.getView().setItemListener { position ->
                 Toast.makeText(this@MainActivity, "asd位置$position", Toast.LENGTH_SHORT).show()
                 sheet.dismiss()
-            })
+            }
             sheet.show()
         }
 
@@ -79,7 +93,7 @@ class MainActivity : AppCompatActivity(), ActionSheetListener,
     }
 
     override fun onShow() {
-
+        Toast.makeText(this, "显示了", Toast.LENGTH_SHORT).show()
     }
 
 }

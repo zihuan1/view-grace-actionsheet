@@ -2,11 +2,14 @@ package com.zihuan.view.actionsheet
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.zihuan.view.actionsheet.listener.BottomSheetDismissListener
+import com.zihuan.view.actionsheet.listener.BottomSheetListener
+import com.zihuan.view.actionsheet.listener.BottomSheetShowListener
 
 /**
  * @author Zihuan
  */
-interface BaseActionSheet<T : BaseActionView> {
+interface BaseSheetLayout<T : BaseSheetContentView> {
 
     /**
      * 设置View
@@ -32,7 +35,7 @@ interface BaseActionSheet<T : BaseActionView> {
     /**
      * 点击边缘是否可隐藏
      */
-    fun touchOutside(outside: Boolean): BaseActionSheet<T>
+    fun touchOutside(outside: Boolean): BaseSheetLayout<T>
 
     fun getSheetDialog(): BottomSheetDialog
 
@@ -44,23 +47,28 @@ interface BaseActionSheet<T : BaseActionView> {
      *   STATE_SETTLING – 在拖动/滑动手势后稳定到特定高度。
      *   STATE_HIDDEN – 不再可见。
      */
-    fun setState(@BottomSheetBehavior.State state: Int): BaseActionSheet<T>
+    fun setState(@BottomSheetBehavior.State state: Int): BaseSheetLayout<T>
 
     /**
      * 是否可以隐藏
      * @param state true 可以隐藏 false 不可隐藏
      */
-    fun setHideable(state: Boolean): BaseActionSheet<T>
+    fun setHideable(state: Boolean): BaseSheetLayout<T>
 
     /**
      * 设置窥视高度
      */
-    fun setPeekHeight(height: Int): BaseActionSheet<T>
+    fun setPeekHeight(height: Int): BaseSheetLayout<T>
 
     /**
      * 设置背景透明度
      * @param amount 从0到1的小数
      */
-    fun setDimAmount(amount: Float): BaseActionSheet<T>
+    fun setDimAmount(amount: Float): BaseSheetLayout<T>
 
+    fun setShowListener(listener: BottomSheetShowListener)
+
+    fun setDismissListener(listener: BottomSheetDismissListener)
+
+    fun setStateListener(listener: BottomSheetListener)
 }
