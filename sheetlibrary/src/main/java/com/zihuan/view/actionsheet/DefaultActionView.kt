@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zihuan.view.actionsheet.listener.BottomSheetItemListener
 
-class DefaultActionView(context: Context, parentView: BaseSheetLayout<*>) :
-    BaseSheetContentView(context, parentView) {
+class DefaultActionView(context: Context, parentView: BaseSheetLayout<*>) : BaseSheetContentView(context, parentView) {
+
+    override fun getLayoutId() = R.layout.sheet_list_layout
+
     private lateinit var tvDismiss: TextView
     private lateinit var mBottomAdapter: DefViewAdapter
 
@@ -58,7 +60,6 @@ class DefaultActionView(context: Context, parentView: BaseSheetLayout<*>) :
         mBottomAdapter.notifyDataSetChanged()
     }
 
-
     lateinit var recycleView: RecyclerView
 
     override fun initView(view: View) {
@@ -77,7 +78,5 @@ class DefaultActionView(context: Context, parentView: BaseSheetLayout<*>) :
 //        parentView.touchOutside(false)
     }
 
-
-    override fun getLayoutId() = R.layout.sheet_list_layout
 
 }

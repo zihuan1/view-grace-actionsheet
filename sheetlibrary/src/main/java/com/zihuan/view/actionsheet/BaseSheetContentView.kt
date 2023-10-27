@@ -19,8 +19,8 @@ abstract class BaseSheetContentView : FrameLayout {
     abstract fun initView(view: View)
     abstract fun getLayoutId(): Int
 
-    fun show(xoff: Int = 0, yoff: Int = 0) {
-        parentView.show(xoff, yoff)
+    fun show(xOffset: Int = 0, yOffset: Int = 0) {
+        parentView.show(xOffset, yOffset)
     }
 
     fun dismiss() {
