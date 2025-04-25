@@ -10,7 +10,7 @@ import com.zihuan.view.actionsheet.listener.BottomSheetListener
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),
-        BottomSheetItemListener, BottomSheetListener {
+    BottomSheetItemListener, BottomSheetListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,14 +19,15 @@ class MainActivity : AppCompatActivity(),
         (1..6).forEach {
             list.add("按钮 $it")
         }
+
         //        //   1 推荐用法
         val sheet = defBottomSheetView {
             dataList = list
         }
         sheet.setHideable(false)
-                .setState(ActionSheetHelper.STATE_EXPANDED)
+            .setState(ActionSheetHelper.STATE_EXPANDED)
 //            .touchOutside(false)
-                .setDimAmount(.1f)
+            .setDimAmount(.1f)
 //            .setPeekHeight(2244)
 //                .setShowListener {
 //                    Toast.makeText(this, "显示了", Toast.LENGTH_SHORT).show()
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity(),
 //                .setDismissListener {
 //                    Toast.makeText(this, "隐藏", Toast.LENGTH_SHORT).show()
 //                }
-                .setStatusListener(this)
+            .setStatusListener(this)
 
         tv_1.setOnClickListener {
 
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity(),
 //                }
 //            })
             sheet.getView()
-                    .addDecoration(RecycleViewDividerJava(this, LinearLayoutManager.VERTICAL))
+                .addDecoration(RecycleViewDividerJava(this, LinearLayoutManager.VERTICAL))
             sheet.getView().setItemListener { position ->
                 Toast.makeText(this@MainActivity, "asd位置$position", Toast.LENGTH_SHORT).show()
                 sheet.dismiss()
@@ -76,6 +77,9 @@ class MainActivity : AppCompatActivity(),
 //            }.show()
         }
         tv_bottom.setOnClickListener {
+            bottomSheetView<TestView> {
+
+            }.show()
         }
 
     }
