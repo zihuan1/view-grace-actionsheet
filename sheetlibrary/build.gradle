@@ -20,11 +20,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
 }
 // 打包源码jar
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
+    from android.sourceSets.main.kotlin.srcDirs // 添加 Kotlin 源码目录
     classifier = 'sources'
 }
 //编译groovy代码时采用 UTF-8
@@ -38,7 +43,7 @@ tasks.withType(JavaCompile) {
 }
 
 task javadoc(type: Javadoc) {
-    failOnError false
+//    failOnError false
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     classpath += configurations.compile
@@ -54,6 +59,7 @@ artifacts {
     archives sourcesJar
     archives javadocJar
 }
+assemble.dependsOn(sourcesJar, javadocJar)
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
